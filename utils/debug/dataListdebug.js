@@ -50,24 +50,3 @@ export const dataListDebug = () => {
     };
   });
 };
-
-/*
-const url = https://pl.apir7.repl.co/table
-
-/* old */
-/*hmUI.createWidget(hmUI.widget.BUTTON, {
-      x: (DEVICE_WIDTH - (DEVICE_WIDTH - px(20))) / 2,
-      y: DEVICE_HEIGHT - px(50),
-      w: DEVICE_WIDTH - px(20),
-      h: DEVICE_HEIGHT * 0.1,
-      text_size: px(18),
-      radius: px(12),
-      normal_color: DEFAULT_COLOR,
-      press_color: DEFAULT_COLOR_TRANSPARENT,
-      text: "Fetch Data",
-      click_func: (button_widget) => {
-        logger.log("click button");
-        fetchData();
-      },
-    });
-*/

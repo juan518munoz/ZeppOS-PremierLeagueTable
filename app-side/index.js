@@ -23,7 +23,7 @@ const fetchData = async (ctx) => {
     // The sample program is for simulation only and does not request real network data, so it is commented here
     //Example of a GET method request
     const res = await fetch({
-      url: "https://api.quotable.io/random",
+      url: "https://pl.apir7.repl.co/table",
       method: "GET",
     });
     // Example of a POST method request
