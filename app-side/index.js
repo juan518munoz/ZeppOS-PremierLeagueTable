@@ -54,7 +54,31 @@ const getLeagueTable = async (ctx) => {
   } catch (error) {
     console.log(error);
     ctx.response({
-      data: { status: false },
+      data: { success: false, error },
+    });
+  }
+};
+
+const getLeagueFixture = async (ctx) => {
+  try {
+    const res = await fetch({
+      url: "https://pl.apir7.repl.co/fixtures",
+      method: "GET",
+    });
+    if (res.status === 404) {
+      throw "data not found";
+    }
+
+    ctx.response({
+      data: {
+        success: true,
+        fixture: null,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    ctx.response({
+      data: { success: false, error },
     });
   }
 };
@@ -67,7 +91,7 @@ AppSideService({
       const jsonRpc = messageBuilder.buf2Json(ctx.request.payload);
       if (jsonRpc.method === "GET_TABLE") {
         return getLeagueTable(ctx);
-      }
+      } else return getLeagueFixture(ctx);
     });
   },
 

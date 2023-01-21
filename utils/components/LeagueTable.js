@@ -26,7 +26,7 @@ export const LeagueTable = () => {
     src: "loading.png",
   });
 
-  const fetchData = () => {
+  const fetchTable = () => {
     messageBuilder
       .request({
         method: "GET_TABLE",
@@ -34,14 +34,10 @@ export const LeagueTable = () => {
       .then((data) => {
         logger.log("fetching data");
         const { table = {}, success } = data;
+
         if (!success) {
-          hmUI.createWidget(hmUI.widget.IMG, {
-            x: DEVICE_WIDTH / 2 - 16,
-            y: DEVICE_HEIGHT / 2,
-            w: 32,
-            h: 32,
-            src: "warning.png",
-          });
+          const { error } = data;
+          ErrorWidget(error);
           return;
         }
 
@@ -64,5 +60,5 @@ export const LeagueTable = () => {
         hmUI.deleteWidget(loading);
       });
   };
-  fetchData();
+  fetchTable();
 };
