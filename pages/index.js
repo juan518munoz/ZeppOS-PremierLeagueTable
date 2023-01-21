@@ -33,7 +33,7 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: (DEVICE_HEIGHT / 2) + px(60),
+      y: DEVICE_HEIGHT / 2 + px(60),
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
@@ -49,23 +49,18 @@ Page({
       },
     });
 
-    // cambiar por https://docs.zepp.com/docs/1.0/reference/device-app-api/hmUI/widget/TEXT/ 
-    hmUI.createWidget(hmUI.widget.BUTTON, {
-      x: 0,
-      y: (DEVICE_HEIGHT / 2) + px(60) + px(60),
-      w: DEVICE_WIDTH,
-      h: 50,
-      text_size: px(18),
-      radius: px(12),
-      normal_color: 0x05f1ff,
-      press_color: 0x38dcea,
-      text: "About",
-      color: 0x38003d,
-      click_func: () => {
-        hmApp.gotoPage({
-          file: "pages/AboutPage",
-        });
-      },
+    const about = hmUI.createWidget(hmUI.widget.IMG, {
+      x: DEVICE_WIDTH / 2 - 16,
+      y: DEVICE_HEIGHT / 2 + px(60) + px(60) + 16,
+      w: 32,
+      h: 32,
+      src: "about.png",
+    });
+
+    about.addEventListener(hmUI.event.CLICK_DOWN, (info) => {
+      hmApp.gotoPage({
+        file: "pages/AboutPage",
+      });
     });
   },
 });
