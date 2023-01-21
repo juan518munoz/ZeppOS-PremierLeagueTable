@@ -32,8 +32,18 @@ export const LeagueTable = () => {
         method: "GET_TABLE",
       })
       .then((data) => {
-        console.log("fetching data");
-        const { table } = data;
+        logger.log("fetching data");
+        const { table = {}, success } = data;
+        if (!success) {
+          hmUI.createWidget(hmUI.widget.IMG, {
+            x: DEVICE_WIDTH / 2 - 16,
+            y: DEVICE_HEIGHT / 2,
+            w: 32,
+            h: 32,
+            src: "warning.png",
+          });
+          return;
+        }
 
         hmUI.createWidget(hmUI.widget.SCROLL_LIST, {
           x: 0, // pos start of whole collection
@@ -48,15 +58,11 @@ export const LeagueTable = () => {
           data_type_config: getTeamTypesConfig(),
           data_type_config_count: DATA_TYPE_CONFIG_LENGHT,
         });
+        TableHeader();
       })
       .then(() => {
         hmUI.deleteWidget(loading);
-      })
-      .catch((error) => {
-        logger.log("Error while fetching league table: ", error);
       });
   };
   fetchData();
-
-  TableHeader();
 };

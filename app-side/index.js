@@ -7,6 +7,9 @@ const getLeagueTable = async (ctx) => {
       url: "https://pl.apir7.repl.co/table",
       method: "GET",
     });
+    if (res.status === 404) {
+      throw "data not found";
+    }
     console.log(res);
     const { body } = res;
 
@@ -44,12 +47,14 @@ const getLeagueTable = async (ctx) => {
     console.log(table);
     ctx.response({
       data: {
+        success: true,
         table: table,
       },
     });
   } catch (error) {
+    console.log(error);
     ctx.response({
-      data: { result: "ERROR in fetching data" },
+      data: { status: false },
     });
   }
 };
