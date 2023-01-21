@@ -18,6 +18,14 @@ const ITEM_CONFIG_LENGHT = (DATA_TYPE_CONFIG_LENGHT = 5);
 export const LeagueTable = () => {
   logger.log("Fetching league table");
 
+  const loading = hmUI.createWidget(hmUI.widget.IMG, {
+    x: DEVICE_WIDTH / 2 - 16,
+    y: DEVICE_HEIGHT / 2,
+    w: 32,
+    h: 32,
+    src: "loading.png",
+  });
+
   const fetchData = () => {
     messageBuilder
       .request({
@@ -32,11 +40,9 @@ export const LeagueTable = () => {
           .split(",")
           .slice(1)
           .map((row) => {
-            logger.log("row: ", row);
             const match = row.match(
               /(\d+) +(.+?) +(\d+) +(\d+) +(\d+) +(\d+) +([+-]?\d+) +(\d+)/
             );
-            logger.log("match: ", match);
             const [
               ,
               rank,
@@ -73,6 +79,9 @@ export const LeagueTable = () => {
           data_type_config: getTeamTypesConfig(),
           data_type_config_count: DATA_TYPE_CONFIG_LENGHT,
         });
+      })
+      .then(() => {
+        hmUI.deleteWidget(loading);
       })
       .catch((error) => {
         logger.log("Error while fetching league table: ", error);

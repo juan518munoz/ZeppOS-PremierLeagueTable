@@ -13,7 +13,7 @@ Page({
       align_h: hmUI.align.LEFT,
       align_v: hmUI.align.CENTER_V,
       text_style: hmUI.text_style.NONE,
-      text: "League API by: tarun7r",
+      text: "League API by:",
     });
 
     hmUI.setStatusBarVisible(false);
