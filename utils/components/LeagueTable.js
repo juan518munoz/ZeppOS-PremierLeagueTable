@@ -6,7 +6,7 @@ import {
   getPositionPercY,
 } from "../functions/getPositionsPer";
 import { TableHeader } from "./TableHeader";
-const logger = DeviceRuntimeCore.HmLogger.getLogger("fetch_api");
+const logger = DeviceRuntimeCore.HmLogger.getLogger("PremierLeagueStats");
 const { messageBuilder } = getApp()._options.globalData;
 
 export const CARD_WIDTH = DEVICE_WIDTH;
@@ -29,42 +29,11 @@ export const LeagueTable = () => {
   const fetchData = () => {
     messageBuilder
       .request({
-        method: "GET_DATA",
+        method: "GET_TABLE",
       })
       .then((data) => {
         console.log("fetching data");
-        const { result = {} } = data;
-        const { text } = result;
-
-        const table = text
-          .split(",")
-          .slice(1)
-          .map((row) => {
-            const match = row.match(
-              /(\d+) +(.+?) +(\d+) +(\d+) +(\d+) +(\d+) +([+-]?\d+) +(\d+)/
-            );
-            const [
-              ,
-              rank,
-              team,
-              matchesPlayed,
-              wins,
-              draws,
-              losses,
-              goalDifference,
-              points,
-            ] = match;
-            return {
-              rank,
-              team,
-              matchesPlayed,
-              wins,
-              draws,
-              losses,
-              goalDifference,
-              points,
-            };
-          });
+        const { table } = data;
 
         hmUI.createWidget(hmUI.widget.SCROLL_LIST, {
           x: 0, // pos start of whole collection

@@ -1,43 +1,50 @@
 import { MessageBuilder } from "../shared/message";
-
 const messageBuilder = new MessageBuilder();
 
-const getData = async (ctx) => {
+const getLeagueTable = async (ctx) => {
   try {
-    // Requesting network data using the fetch API
-    // The sample program is for simulation only and does not request real network data, so it is commented here
-    //Example of a GET method request
     const res = await fetch({
       url: "https://pl.apir7.repl.co/table",
       method: "GET",
     });
-    // Example of a POST method request
-    // const { body: { data = {} } = {} } = await fetch({
-    //   url: 'https://xxx.com/api/xxx',
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     text: 'Hello Zepp OS'
-    //   })
-    // })
+    console.log(res);
+    const { body } = res;
 
-    // This is for the simulator
-    /*ctx.response({
-      data: {
-        result: {
-          text: res.body,
-        },
-      },
-    });*/
+    const bodyStringy = JSON.stringify(body);
+    const table = bodyStringy
+      .split(",")
+      .slice(1)
+      .map((row) => {
+        const match = row.match(
+          /(\d+) +(.+?) +(\d+) +(\d+) +(\d+) +(\d+) +([+-]?\d+) +(\d+)/
+        );
+        const [
+          ,
+          rank,
+          team,
+          matchesPlayed,
+          wins,
+          draws,
+          losses,
+          goalDifference,
+          points,
+        ] = match;
+        return {
+          rank,
+          team,
+          matchesPlayed,
+          wins,
+          draws,
+          losses,
+          goalDifference,
+          points,
+        };
+      });
 
-    // This is for the watch
+    console.log(table);
     ctx.response({
       data: {
-        result: { 
-          text: JSON.stringify(res.body),
-        },
+        table: table,
       },
     });
   } catch (error) {
@@ -53,8 +60,8 @@ AppSideService({
 
     messageBuilder.on("request", (ctx) => {
       const jsonRpc = messageBuilder.buf2Json(ctx.request.payload);
-      if (jsonRpc.method === "GET_DATA") {
-        return getData(ctx);
+      if (jsonRpc.method === "GET_TABLE") {
+        return getLeagueTable(ctx);
       }
     });
   },
