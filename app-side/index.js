@@ -2,22 +2,7 @@ import { MessageBuilder } from "../shared/message";
 
 const messageBuilder = new MessageBuilder();
 
-// Simulating an asynchronous network request using Promise
-const mockAPI = async () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        body: {
-          data: {
-            text: "HELLO ZEPPOS",
-          },
-        },
-      });
-    }, 1000);
-  });
-};
-
-const fetchData = async (ctx) => {
+const getData = async (ctx) => {
   try {
     // Requesting network data using the fetch API
     // The sample program is for simulation only and does not request real network data, so it is commented here
@@ -38,6 +23,7 @@ const fetchData = async (ctx) => {
     //   })
     // })
 
+    // This is for the simulator
     ctx.response({
       data: {
         result: {
@@ -45,6 +31,15 @@ const fetchData = async (ctx) => {
         },
       },
     });
+
+    // This is for the watch
+    /*ctx.response({
+      data: {
+        result: { 
+          text: JSON.stringify(res.body),
+        },
+      },
+    });*/
   } catch (error) {
     ctx.response({
       data: { result: "ERROR" },
@@ -59,7 +54,7 @@ AppSideService({
     messageBuilder.on("request", (ctx) => {
       const jsonRpc = messageBuilder.buf2Json(ctx.request.payload);
       if (jsonRpc.method === "GET_DATA") {
-        return fetchData(ctx);
+        return getData(ctx);
       }
     });
   },

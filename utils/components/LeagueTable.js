@@ -1,13 +1,11 @@
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../config/device";
 
 import { getTeamTypesConfig, getTeamsConfig } from "./Teams";
-import { dataListDebug } from "../debug/dataListdebug";
 import {
   getPositionPercX,
   getPositionPercY,
 } from "../functions/getPositionsPer";
 import { TableHeader } from "./TableHeader";
-//import { dataList } from "../functions/dataList";
 const logger = DeviceRuntimeCore.HmLogger.getLogger("fetch_api");
 const { messageBuilder } = getApp()._options.globalData;
 
@@ -29,37 +27,38 @@ export const LeagueTable = () => {
         console.log("fetching data");
         const { result = {} } = data;
         const { text } = result;
-        const slicedText = text.slice(1);
-        logger.log("slicedText: ", slicedText); // PRINTS CORRECT OUTPUT HERE, BREAKS ON NEXT LINE
 
-        const table = slicedText.map((row) => {
-          logger.log("row: ", row);
-          const match = row.match(
-            /(\d+) +(.+?) +(\d+) +(\d+) +(\d+) +(\d+) +([+-]?\d+) +(\d+)/
-          );
-          logger.log("match: ", match);
-          const [
-            ,
-            rank,
-            team,
-            matchesPlayed,
-            wins,
-            draws,
-            losses,
-            goalDifference,
-            points,
-          ] = match;
-          return {
-            rank,
-            team,
-            matchesPlayed,
-            wins,
-            draws,
-            losses,
-            goalDifference,
-            points,
-          };
-        });
+        const table = text
+          .split(",")
+          .slice(1)
+          .map((row) => {
+            logger.log("row: ", row);
+            const match = row.match(
+              /(\d+) +(.+?) +(\d+) +(\d+) +(\d+) +(\d+) +([+-]?\d+) +(\d+)/
+            );
+            logger.log("match: ", match);
+            const [
+              ,
+              rank,
+              team,
+              matchesPlayed,
+              wins,
+              draws,
+              losses,
+              goalDifference,
+              points,
+            ] = match;
+            return {
+              rank,
+              team,
+              matchesPlayed,
+              wins,
+              draws,
+              losses,
+              goalDifference,
+              points,
+            };
+          });
 
         hmUI.createWidget(hmUI.widget.SCROLL_LIST, {
           x: 0, // pos start of whole collection
@@ -76,7 +75,7 @@ export const LeagueTable = () => {
         });
       })
       .catch((error) => {
-        logger.log("Error in async function: ", error);
+        logger.log("Error while fetching league table: ", error);
       });
   };
   fetchData();
