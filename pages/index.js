@@ -15,7 +15,7 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: DEVICE_HEIGHT - px(60),
+      y: DEVICE_HEIGHT / 2,
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
@@ -33,7 +33,7 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: DEVICE_HEIGHT - px(50 * 2) - px(30),
+      y: (DEVICE_HEIGHT / 2) + px(60),
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
@@ -45,6 +45,25 @@ Page({
       click_func: () => {
         hmApp.gotoPage({
           file: "pages/LeagueFixturePage",
+        });
+      },
+    });
+
+    // cambiar por https://docs.zepp.com/docs/1.0/reference/device-app-api/hmUI/widget/TEXT/ 
+    hmUI.createWidget(hmUI.widget.BUTTON, {
+      x: 0,
+      y: (DEVICE_HEIGHT / 2) + px(60) + px(60),
+      w: DEVICE_WIDTH,
+      h: 50,
+      text_size: px(18),
+      radius: px(12),
+      normal_color: 0x05f1ff,
+      press_color: 0x38dcea,
+      text: "About",
+      color: 0x38003d,
+      click_func: () => {
+        hmApp.gotoPage({
+          file: "pages/AboutPage",
         });
       },
     });

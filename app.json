@@ -27,7 +27,8 @@
           "pages": [
             "pages/index",
             "pages/LeagueTablePage",
-            "pages/LeagueFixturePage"
+            "pages/LeagueFixturePage",
+            "pages/AboutPage"
           ]
         },
         "app-side": {

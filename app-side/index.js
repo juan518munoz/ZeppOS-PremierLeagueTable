@@ -24,25 +24,25 @@ const getData = async (ctx) => {
     // })
 
     // This is for the simulator
-    /*ctx.response({
+    ctx.response({
       data: {
         result: {
           text: res.body,
         },
       },
-    });*/
+    });
 
     // This is for the watch
-    ctx.response({
+    /*ctx.response({
       data: {
         result: { 
           text: JSON.stringify(res.body),
         },
       },
-    });
+    });*/
   } catch (error) {
     ctx.response({
-      data: { result: "ERROR" },
+      data: { result: "ERROR in fetching data" },
     });
   }
 };
