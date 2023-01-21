@@ -1,8 +1,6 @@
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../utils/config/device";
 
 const logger = DeviceRuntimeCore.HmLogger.getLogger("fetch_api");
-import { League } from "../utils/components/League";
-
 Page({
   state: {},
   build() {
@@ -17,14 +15,15 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: DEVICE_HEIGHT - px(50),
+      y: DEVICE_HEIGHT - px(60),
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
       radius: px(12),
-      normal_color: 0x2894aa,
+      normal_color: 0x05f1ff,
       press_color: 0x38dcea,
       text: "Table",
+      color: 0x38003d,
       click_func: () => {
         hmApp.gotoPage({
           file: "pages/LeagueTablePage",
@@ -34,14 +33,15 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: DEVICE_HEIGHT - px(50 * 2) - px(20),
+      y: DEVICE_HEIGHT - px(50 * 2) - px(30),
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
       radius: px(12),
-      normal_color: 0x2894aa,
+      normal_color: 0x05f1ff,
       press_color: 0x38dcea,
       text: "Fixtures",
+      color: 0x38003d,
       click_func: () => {
         hmApp.gotoPage({
           file: "pages/LeagueFixturePage",
