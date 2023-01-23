@@ -12,8 +12,8 @@ const getLeagueTable = async (ctx) => {
     }
     console.log(res);
     const { body } = res;
-
     const bodyStringy = JSON.stringify(body);
+    
     const table = bodyStringy
       .split(",")
       .slice(1)
@@ -68,11 +68,64 @@ const getLeagueFixture = async (ctx) => {
     if (res.status === 404) {
       throw "data not found";
     }
+    const { body } = res;
+    const bodyStringy = JSON.stringify(body);
+
+    const games = bodyStringy.split(",");
+    const gamesArr = games.map((game) => {
+      const gameArr = game.split("  ");
+      if (gameArr.length === 3) {
+        return {
+          homeTeam: gameArr[0].slice(1),
+          homeScore: "",
+          awayTeam: gameArr[1].slice(1),
+          awayScore: "",
+          date: "Today",
+          status: gameArr[2],
+        };
+      } else if (gameArr.length === 4) {
+        return {
+          homeTeam: gameArr[0].slice(1),
+          homeScore: "",
+          awayTeam: gameArr[1].slice(1),
+          awayScore: "",
+          date: gameArr[2].slice(1),
+          status: gameArr[3],
+        };
+      } else if (gameArr.length === 5) {
+        return {
+          homeTeam: gameArr[0].slice(1),
+          homeScore: gameArr[1],
+          awayTeam: gameArr[2],
+          awayScore: gameArr[3],
+          date: "Today",
+          status: gameArr[4].slice(0, -1),
+        };
+      } else if (gameArr.length === 6) {
+        return {
+          homeTeam: gameArr[0].slice(1),
+          homeScore: gameArr[1],
+          awayTeam: gameArr[2],
+          awayScore: gameArr[3],
+          date: gameArr[4],
+          status: gameArr[5].slice(0, -1),
+        };
+      }
+      return {
+        homeTeam: gameArr[0].slice(1),
+        homeScore: gameArr[1],
+        awayTeam: gameArr[2],
+        awayScore: gameArr[3],
+        date: gameArr[4],
+        status: gameArr[5],
+      };
+    });
+    const fixture = gamesArr.filter((game) => game.date === "Today");
 
     ctx.response({
       data: {
         success: true,
-        fixture: null,
+        fixture: fixture,
       },
     });
   } catch (error) {

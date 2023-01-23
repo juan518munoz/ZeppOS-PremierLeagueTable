@@ -16,7 +16,7 @@ export const Fixture = () => {
     y: DEVICE_HEIGHT / 2,
     w: 32,
     h: 32,
-    src: "loading.png",
+    src: "loading/loading.png",
   });
 
   const fetchFixture = () => {
@@ -44,7 +44,7 @@ export const Fixture = () => {
           align_h: hmUI.align.CENTER_H,
           align_v: hmUI.align.CENTER_V,
           text_style: hmUI.text_style.NONE,
-          text: "Fetched data",
+          text: "fetched data",
         });
       })
       .then(() => {
