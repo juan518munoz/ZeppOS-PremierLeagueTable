@@ -12,12 +12,19 @@ const { messageBuilder } = getApp()._options.globalData;
 export const Fixture = () => {
   logger.log("Fetching league fixture");
 
-  const loading = hmUI.createWidget(hmUI.widget.IMG, {
-    x: DEVICE_WIDTH / 2 - 16,
-    y: DEVICE_HEIGHT / 2,
-    w: 32,
-    h: 32,
-    src: "loading.png",
+  const loading = hmUI.createWidget(hmUI.widget.IMG_ANIM, {
+    anim_path: "loading",
+    anim_prefix: "loading",
+    anim_ext: "png",
+    anim_fps: 60,
+    anim_size: 25,
+    repeat_count: 0,
+    anim_status: hmUI.anim_status.START,
+    x: DEVICE_WIDTH / 2 - px(40),
+    y: DEVICE_HEIGHT / 2 - px(40),
+    anim_complete_call: () => {
+      console.log("animation complete");
+    },
   });
 
   const fetchFixture = () => {
@@ -52,6 +59,19 @@ export const Fixture = () => {
           w: DEVICE_WIDTH,
           h: DEVICE_HEIGHT,
           color: 0x38003d,
+        });
+
+        hmUI.createWidget(hmUI.widget.TEXT, {
+          x: 0,
+          y: px(148) + DEVICE_HEIGHT * currPage,
+          w: DEVICE_WIDTH,
+          h: px(80),
+          color: 0xffffff,
+          text_size: px(28),
+          align_h: hmUI.align.CENTER_H,
+          align_v: hmUI.align.CENTER_V,
+          text_style: hmUI.text_style.NONE,
+          text: "No more\nmatches",
         });
       })
       .then(() => {

@@ -18,12 +18,19 @@ const ITEM_CONFIG_LENGHT = (DATA_TYPE_CONFIG_LENGHT = 5);
 export const LeagueTable = () => {
   logger.log("Fetching league table");
 
-  const loading = hmUI.createWidget(hmUI.widget.IMG, {
-    x: DEVICE_WIDTH / 2 - 16,
-    y: DEVICE_HEIGHT / 2,
-    w: 32,
-    h: 32,
-    src: "loading.png",
+  const loading = hmUI.createWidget(hmUI.widget.IMG_ANIM, {
+    anim_path: "loading",
+    anim_prefix: "loading",
+    anim_ext: "png",
+    anim_fps: 60,
+    anim_size: 25,
+    repeat_count: 0,
+    anim_status: hmUI.anim_status.START,
+    x: DEVICE_WIDTH / 2 - px(40),
+    y: DEVICE_HEIGHT / 2 - px(40),
+    anim_complete_call: () => {
+      console.log("animation complete");
+    },
   });
 
   const fetchTable = () => {
