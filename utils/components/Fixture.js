@@ -5,6 +5,7 @@ import {
   getPositionPercY,
 } from "../functions/getPositionsPer";
 import { ErrorWidget } from "./ErrorWidget";
+import { GameInfoWidget } from "./GameInfoWidget";
 const logger = DeviceRuntimeCore.HmLogger.getLogger("PremierLeagueStats");
 const { messageBuilder } = getApp()._options.globalData;
 
@@ -16,7 +17,7 @@ export const Fixture = () => {
     y: DEVICE_HEIGHT / 2,
     w: 32,
     h: 32,
-    src: "loading/loading.png",
+    src: "loading.png",
   });
 
   const fetchFixture = () => {
@@ -34,17 +35,23 @@ export const Fixture = () => {
           return;
         }
 
-        hmUI.createWidget(hmUI.widget.TEXT, {
+        const pageCount = fixture.length + 1;
+        const isVertical = true;
+        hmUI.setScrollView(true, DEVICE_HEIGHT, pageCount, isVertical);
+
+        let currPage = 0;
+        fixture.forEach((game) => {
+          GameInfoWidget(game, currPage);
+          currPage++;
+        });
+
+        // No more matches
+        hmUI.createWidget(hmUI.widget.FILL_RECT, {
           x: 0,
-          y: DEVICE_HEIGHT / 2,
+          y: 0 + DEVICE_HEIGHT * currPage,
           w: DEVICE_WIDTH,
-          h: 46,
-          color: 0x04f3fb,
-          text_size: 20,
-          align_h: hmUI.align.CENTER_H,
-          align_v: hmUI.align.CENTER_V,
-          text_style: hmUI.text_style.NONE,
-          text: "fetched data",
+          h: DEVICE_HEIGHT,
+          color: 0x38003d,
         });
       })
       .then(() => {

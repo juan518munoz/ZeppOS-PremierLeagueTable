@@ -15,7 +15,7 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: DEVICE_HEIGHT / 2,
+      y: DEVICE_HEIGHT / 2 + px(60),
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
@@ -33,14 +33,14 @@ Page({
 
     hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
-      y: DEVICE_HEIGHT / 2 + px(60),
+      y: DEVICE_HEIGHT / 2,
       w: DEVICE_WIDTH,
       h: 50,
       text_size: px(18),
       radius: px(12),
       normal_color: 0x05f1ff,
       press_color: 0x38dcea,
-      text: "Fixtures",
+      text: "Fixture",
       color: 0x38003d,
       click_func: () => {
         hmApp.gotoPage({

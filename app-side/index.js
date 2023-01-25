@@ -13,7 +13,7 @@ const getLeagueTable = async (ctx) => {
     console.log(res);
     const { body } = res;
     const bodyStringy = JSON.stringify(body);
-    
+
     const table = bodyStringy
       .split(",")
       .slice(1)
@@ -53,8 +53,9 @@ const getLeagueTable = async (ctx) => {
     });
   } catch (error) {
     console.log(error);
+    const message = { error };
     ctx.response({
-      data: { success: false, error },
+      data: { success: false, message },
     });
   }
 };
@@ -69,7 +70,8 @@ const getLeagueFixture = async (ctx) => {
       throw "data not found";
     }
     const { body } = res;
-    const bodyStringy = JSON.stringify(body);
+    let bodyStringy = JSON.stringify(body);
+    bodyStringy = bodyStringy.split(String.fromCharCode(92)).join("").slice(1);
 
     const games = bodyStringy.split(",");
     const gamesArr = games.map((game) => {
@@ -90,7 +92,7 @@ const getLeagueFixture = async (ctx) => {
           awayTeam: gameArr[1].slice(1),
           awayScore: "",
           date: gameArr[2].slice(1),
-          status: gameArr[3],
+          status: gameArr[3].slice(0, -1),
         };
       } else if (gameArr.length === 5) {
         return {
@@ -120,7 +122,7 @@ const getLeagueFixture = async (ctx) => {
         status: gameArr[5],
       };
     });
-    const fixture = gamesArr.filter((game) => game.date === "Today");
+    const fixture = gamesArr; 
 
     ctx.response({
       data: {
